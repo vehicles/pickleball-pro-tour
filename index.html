@@ -548,7 +548,7 @@
                     <div>
                         <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
                             <i data-lucide="users" class="w-5 h-5 text-brand"></i>
-                            <span id="players-panel-title">Danh Sách VĐV</span>
+                            <span id="players-panel-title">Danh Sách</span>
                         </h2>
                         <p id="players-panel-subtitle" class="text-sm text-slate-500 mt-0.5">BTC chỉnh sửa tên VĐV, giới tính, điểm trình để đội trưởng sắp thứ tự thi đấu. Khán giả & Trọng tài xem danh sách VĐV.</p>
                     </div>
@@ -727,8 +727,7 @@
                             <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
                                 <i data-lucide="shield" class="w-5 h-5 text-amber-600"></i>
                                 <span>Danh Sách Team & Sắp Thứ Tự Thi Đấu</span>
-                            </h2>
-                            <p class="text-sm text-slate-500">BTC phân bổ thành viên vào các đội và nhấn <strong>↑ / ↓</strong> để sắp thứ tự thi đấu cho từng VĐV. Khi hết 1 vòng VĐV sẽ tự động xoay tua lại từ đầu.</p>
+                            </h2>                            
                         </div>
                         <div id="team-generator-bar" class="flex flex-wrap items-end gap-3">
                             <div>
@@ -832,8 +831,7 @@
             <div id="team-podium-section" class="hidden bg-gradient-to-br from-amber-50 via-white to-amber-100/80 rounded-3xl shadow-sm p-6 border-2 border-amber-300">
                 <div class="text-center space-y-1.5 mb-6">
                     <span class="bg-amber-400 text-amber-950 text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-widest">Bảng Vinh Danh</span>
-                    <h2 class="text-2xl font-black text-amber-950">BỤC VINH QUANG</h2>
-                    <p id="team-podium-subtitle" class="text-xs text-slate-600">Xếp hạng Nhất, Nhì, Ba dựa trên thành tích vòng tròn đồng đội.</p>
+                    <h2 class="text-2xl font-black text-amber-950">BỤC VINH QUANG</h2>                    
                 </div>
                 <div id="team-podium-container" class="grid grid-cols-1 md:grid-cols-3 gap-6 items-end max-w-4xl mx-auto"></div>
             </div>
@@ -845,8 +843,7 @@
                         <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
                             <i data-lucide="bar-chart-2" class="w-5 h-5 text-brand"></i>
                             <span id="standings-title">Bảng Xếp Hạng Vòng Bảng</span>
-                        </h2>
-                        <p class="text-sm text-slate-500">Xếp hạng tự động theo: Số trận thắng → Hiệu số điểm → Tổng điểm ghi được.</p>
+                        </h2>                        
                     </div>
                     <div id="knockout-action-wrapper" class="flex items-center gap-2">
                         <button type="button" onclick="generateKnockoutBracket(true)" class="px-4 py-2 bg-brand hover:bg-brand-dark text-white font-semibold rounded-xl text-sm transition flex items-center gap-2 shadow-sm">
@@ -1441,8 +1438,8 @@
                 adminTools.classList.remove('flex');
                 if (logoTrigger) logoTrigger.classList.add('hidden');
                 if (configWrapper) configWrapper.classList.add('hidden');
-                if (step1Label) step1Label.textContent = 'Danh Sách VĐV';
-                if (playersTitle) playersTitle.textContent = 'Danh Sách VĐV (Chế Độ Trọng Tài)';
+                if (step1Label) step1Label.textContent = 'Danh Sách';
+                if (playersTitle) playersTitle.textContent = 'Danh Sách (Chế Độ Trọng Tài)';
                 if (playersSub) playersSub.textContent = 'Ẩn phần cấu hình giải. Trọng tài xem danh sách VĐV và tăng/giảm điểm trực tiếp ở Bước 3 / Bước 4.';
             } else {
                 badge.className = 'inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-0.5 rounded-lg bg-sky-500 text-white';
@@ -1453,9 +1450,9 @@
                 adminTools.classList.remove('flex');
                 if (logoTrigger) logoTrigger.classList.add('hidden');
                 if (configWrapper) configWrapper.classList.add('hidden');
-                if (step1Label) step1Label.textContent = 'Danh Sách VĐV';
-                if (playersTitle) playersTitle.textContent = 'Danh Sách VĐV';
-                if (playersSub) playersSub.textContent = 'Chế độ Khán giả: ẩn tab/khu vực cấu hình, chỉ hiển thị danh sách VĐV và kết quả thi đấu.';
+                if (step1Label) step1Label.textContent = 'Danh Sách';
+                if (playersTitle) playersTitle.textContent = 'Danh Sách';
+                if (playersSub) playersSub.textContent = '';
             }
 
             const nameInput = document.getElementById('tournament-name-input');
@@ -1871,7 +1868,8 @@
             const isPair = state.mode === 'pair';
             const isAdmin = canManageTournament();
             const badge = document.getElementById('header-mode-badge');
-            if (badge) badge.textContent = isPair ? 'Đấu Cặp & Chia Bảng' : 'Đấu Đội (Team)';
+            //if (badge) badge.textContent = isPair ? 'Đấu Cặp & Chia Bảng' : 'Đấu Đội (Team)';
+			if (badge) badge.textContent = isPair ? 'Đấu Cặp & Chia Bảng' : 'MLP';
 
             const cardPair = document.getElementById('mode-card-pair');
             const cardTeam = document.getElementById('mode-card-team');
@@ -1888,8 +1886,8 @@
 
             const step2Label = document.getElementById('step-2-label');
             const step4Label = document.getElementById('step-4-label');
-            if (step2Label) step2Label.textContent = isPair ? 'Ghép Cặp & Chia Bảng' : 'Chia Đội & Thứ Tự';
-            if (step4Label) step4Label.textContent = isPair ? 'BXH & Nhánh Đấu' : 'BXH & Bục Vinh Quang';
+            if (step2Label) step2Label.textContent = isPair ? 'Ghép Cặp & Chia Bảng' : 'Chia Đội';
+            if (step4Label) step4Label.textContent = isPair ? 'BXH & Nhánh Đấu' : 'Bảng Xếp Hạng';
         }
 
         function setStep(step) {
@@ -2779,13 +2777,7 @@
                             ? `Tổng ${wIdx * step}→${(wIdx + 1) * step - 1}`
                             : `${wIdx * step}-${(wIdx + 1) * step}đ`;
                         return `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-white border border-amber-200 text-[11px] font-semibold text-slate-700"><strong class="text-amber-700">Lượt ${wIdx + 1} (${labelRange}):</strong> #${i1 + 1} &amp; #${i2 + 1}</span>`;
-                    }).join('');
-                    waveLineupHtml = `
-                        <div class="px-3 py-2 bg-amber-50/90 border-b border-amber-200/80 flex flex-wrap items-center gap-1.5">
-                            <span class="text-[11px] font-bold text-amber-900 flex items-center gap-1 mr-1"><i data-lucide="waves" class="w-3.5 h-3.5"></i> 1 vòng (${cycleLen} lượt — hết vòng tự xoay lại):</span>
-                            ${waves}
-                        </div>
-                    `;
+                    }).join('');                    
                 }
 
                 return `
