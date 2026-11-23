@@ -179,11 +179,25 @@
                         <div class="flex flex-wrap items-center gap-2">
                             <span class="text-xs uppercase tracking-wider font-bold bg-brand px-2 py-0.5 rounded-md text-white">ProTourney VN</span>
                             <span id="header-mode-badge" class="text-xs font-medium bg-white/15 px-2.5 py-0.5 rounded-full text-white/90">Đấu Cặp & Chia Bảng</span>
-                            <span id="header-scoring-badge" class="text-xs font-semibold bg-amber-400/20 border border-amber-300/40 px-2.5 py-0.5 rounded-full text-amber-200">Điểm Thường • Chạm 11đ</span>
                         </div>
                         <input id="tournament-name-input" type="text" value="Giải Pickleball Mở Rộng 2026" 
                             class="bg-transparent font-bold text-lg sm:text-xl text-white focus:outline-none focus:bg-white/10 rounded px-1.5 -ml-1.5 mt-0.5 w-full max-w-xs sm:max-w-md transition"
                             title="Nhấn để đổi tên giải đấu">
+                        <div id="header-event-meta" class="hidden flex-wrap items-center gap-x-3 gap-y-1 mt-1 text-xs text-white/90">
+                            <span id="header-time-display" class="hidden inline-flex items-center gap-1 bg-white/10 px-2 py-0.5 rounded-md">
+                                <i data-lucide="calendar-clock" class="w-3.5 h-3.5 text-amber-300 shrink-0"></i>
+                                <span id="header-time-text"></span>
+                            </span>
+                            <span id="header-location-display" class="hidden inline-flex items-center gap-1 bg-white/10 px-2 py-0.5 rounded-md">
+                                <i data-lucide="map-pin" class="w-3.5 h-3.5 text-rose-300 shrink-0"></i>
+                                <span id="header-location-text"></span>
+                                <a id="header-map-link" href="#" target="_blank" rel="noopener noreferrer"
+                                    class="hidden inline-flex items-center gap-0.5 ml-1 px-1.5 py-0.2 rounded bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-[11px] transition">
+                                    <span>Google Map</span>
+                                    <i data-lucide="external-link" class="w-3 h-3"></i>
+                                </a>
+                            </span>
+                        </div>
                     </div>
                 </div>
 
@@ -291,16 +305,6 @@
         </div>
     </header>
 
-    <!-- Banner thông báo quyền hiện tại -->
-    <div id="role-info-banner" class="bg-sky-50 border-b border-sky-200 text-sky-900 text-xs py-2 px-4">
-        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
-            <span id="role-banner-text">
-                <strong>Chế độ Khán giả:</strong> Ẩn cấu hình, chỉ hiện danh sách VĐV. Nhấn <strong>Đăng nhập</strong> để vào quyền Trọng tài hoặc BTC.
-            </span>
-            <span id="sync-status-indicator" class="text-sky-700 font-medium">● Đồng bộ LocalStorage</span>
-        </div>
-    </div>
-
     <!-- Nội Dung Chính -->
     <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
         
@@ -368,6 +372,55 @@
                                 <input id="custom-theme-color-picker" type="color" value="#00979C" onchange="applyCustomThemeColor(this.value)"
                                     class="w-7 h-6 rounded cursor-pointer border border-slate-300 bg-transparent p-0">
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Thời Gian & Địa Điểm Tổ Chức (Link Google Map) -->
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 mt-4 pt-4 border-t border-slate-100">
+                        <!-- Thời gian tổ chức -->
+                        <div class="lg:col-span-4 bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-1.5">
+                            <label for="config-tournament-time-input" class="flex items-center gap-1.5 text-xs font-bold text-slate-700">
+                                <i data-lucide="calendar-clock" class="w-4 h-4 text-brand"></i>
+                                <span>Thời Gian Tổ Chức</span>
+                            </label>
+                            <input id="config-tournament-time-input" type="text"
+                                oninput="updateTournamentScheduleMeta('time', this.value)"
+                                placeholder="VD: 08:00 - 17:00, Chủ Nhật 29/11/2026"
+                                class="w-full px-3.5 py-2 rounded-xl bg-white border border-slate-300 text-sm font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand">
+                            <p class="text-[11px] text-slate-400">Hiển thị công khai trên tiêu đề giải cho VĐV & Khán giả</p>
+                        </div>
+
+                        <!-- Tên sân / Địa điểm -->
+                        <div class="lg:col-span-4 bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-1.5">
+                            <label for="config-tournament-location-input" class="flex items-center gap-1.5 text-xs font-bold text-slate-700">
+                                <i data-lucide="map-pin" class="w-4 h-4 text-rose-500"></i>
+                                <span>Địa Điểm / Cụm Sân Thi Đấu</span>
+                            </label>
+                            <input id="config-tournament-location-input" type="text"
+                                oninput="updateTournamentScheduleMeta('location', this.value)"
+                                placeholder="VD: Cụm Sân Pickleball Thủ Đức, TP.HCM"
+                                class="w-full px-3.5 py-2 rounded-xl bg-white border border-slate-300 text-sm font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand">
+                            <p class="text-[11px] text-slate-400">Tên sân hoặc địa chỉ ngắn gọn của giải đấu</p>
+                        </div>
+
+                        <!-- Link Google Map -->
+                        <div class="lg:col-span-4 bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-1.5">
+                            <div class="flex items-center justify-between gap-2">
+                                <label for="config-tournament-map-url-input" class="flex items-center gap-1.5 text-xs font-bold text-slate-700">
+                                    <i data-lucide="navigation" class="w-4 h-4 text-emerald-600"></i>
+                                    <span>Link Google Map</span>
+                                </label>
+                                <a id="config-map-preview-link" href="#" target="_blank" rel="noopener noreferrer"
+                                    class="hidden text-[11px] font-bold text-brand-dark hover:underline inline-flex items-center gap-1">
+                                    <span>Mở thử bản đồ</span>
+                                    <i data-lucide="external-link" class="w-3 h-3"></i>
+                                </a>
+                            </div>
+                            <input id="config-tournament-map-url-input" type="url"
+                                oninput="updateTournamentScheduleMeta('mapUrl', this.value)"
+                                placeholder="Dán link https://maps.app.goo.gl/... hoặc Google Maps"
+                                class="w-full px-3.5 py-2 rounded-xl bg-white border border-slate-300 text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand">
+                            <p class="text-[11px] text-slate-400">Cho phép VĐV & Khán giả bấm mở chỉ đường trực tiếp</p>
                         </div>
                     </div>
                 </div>
@@ -837,7 +890,7 @@
     <!-- Footer -->
     <footer class="bg-white border-t border-slate-200 py-4 mt-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-2">
-            <div>© 2026 <strong id="footer-tournament-name">ProTourney VN</strong> — Hệ thống quản lý giải đấu thể thao động.</div>
+            <div>© 2026 <strong id="footer-tournament-name">ProTourney VN</strong> — Hệ thống quản lý giải đấu thể thao.</div>
             <div>Trạng thái lưu trữ: <span id="footer-sync-status" class="text-emerald-600 font-semibold">● Đã đồng bộ LocalStorage</span></div>
         </div>
     </footer>
@@ -944,6 +997,85 @@
             saveState();
         }
 
+        function normalizeMapUrl(rawUrl) {
+            const trimmed = (rawUrl || '').trim();
+            if (!trimmed) return '';
+            if (/^https?:\/\//i.test(trimmed)) return trimmed;
+            return 'https://' + trimmed;
+        }
+
+        function updateTournamentScheduleMeta(field, val) {
+            if (!canManageTournament()) return;
+            if (field === 'time') state.tournamentTime = val;
+            else if (field === 'location') state.tournamentLocation = val;
+            else if (field === 'mapUrl') state.tournamentMapUrl = val;
+            syncEventMetaUI();
+            saveState();
+        }
+
+        function syncEventMetaUI() {
+            const timeVal = (state.tournamentTime || '').trim();
+            const locVal = (state.tournamentLocation || '').trim();
+            const mapUrlRaw = (state.tournamentMapUrl || '').trim();
+            const safeMapUrl = normalizeMapUrl(mapUrlRaw);
+
+            const tInput = document.getElementById('config-tournament-time-input');
+            const lInput = document.getElementById('config-tournament-location-input');
+            const mInput = document.getElementById('config-tournament-map-url-input');
+            const previewLink = document.getElementById('config-map-preview-link');
+
+            if (tInput && document.activeElement !== tInput) tInput.value = state.tournamentTime || '';
+            if (lInput && document.activeElement !== lInput) lInput.value = state.tournamentLocation || '';
+            if (mInput && document.activeElement !== mInput) mInput.value = state.tournamentMapUrl || '';
+
+            if (previewLink) {
+                if (safeMapUrl) {
+                    previewLink.href = safeMapUrl;
+                    previewLink.classList.remove('hidden');
+                } else {
+                    previewLink.href = '#';
+                    previewLink.classList.add('hidden');
+                }
+            }
+
+            const metaWrapper = document.getElementById('header-event-meta');
+            const timeWrap = document.getElementById('header-time-display');
+            const timeText = document.getElementById('header-time-text');
+            const locWrap = document.getElementById('header-location-display');
+            const locText = document.getElementById('header-location-text');
+            const mapLink = document.getElementById('header-map-link');
+
+            const hasTime = Boolean(timeVal);
+            const hasLocOrMap = Boolean(locVal || safeMapUrl);
+
+            if (timeWrap && timeText) {
+                timeText.textContent = timeVal;
+                timeWrap.classList.toggle('hidden', !hasTime);
+                timeWrap.classList.toggle('inline-flex', hasTime);
+            }
+
+            if (locWrap && locText && mapLink) {
+                locText.textContent = locVal || (safeMapUrl ? 'Bản đồ sân thi đấu' : '');
+                if (safeMapUrl) {
+                    mapLink.href = safeMapUrl;
+                    mapLink.classList.remove('hidden');
+                    mapLink.classList.add('inline-flex');
+                } else {
+                    mapLink.href = '#';
+                    mapLink.classList.add('hidden');
+                    mapLink.classList.remove('inline-flex');
+                }
+                locWrap.classList.toggle('hidden', !hasLocOrMap);
+                locWrap.classList.toggle('inline-flex', hasLocOrMap);
+            }
+
+            if (metaWrapper) {
+                const showMeta = hasTime || hasLocOrMap;
+                metaWrapper.classList.toggle('hidden', !showMeta);
+                metaWrapper.classList.toggle('flex', showMeta);
+            }
+        }
+
         function syncLogoAndNameUI() {
             const name = state.tournamentName || 'Giải Pickleball Mở Rộng 2026';
             const hInput = document.getElementById('tournament-name-input');
@@ -953,6 +1085,7 @@
             if (cInput && document.activeElement !== cInput) cInput.value = name;
             if (fName) fName.textContent = name;
             document.title = `${name} - ProTourney VN`;
+            syncEventMetaUI();
 
             const logoData = state.tournamentLogo || '';
             const hImg = document.getElementById('header-logo-img');
@@ -1027,13 +1160,8 @@
         let isApplyingRemoteSnapshot = false;
 
         function updateSyncBadges(statusText, isFirebaseConnected = false) {
-            const topBadge = document.getElementById('sync-status-indicator');
             const footBadge = document.getElementById('footer-sync-status');
             const btnLabel = document.getElementById('firebase-btn-label');
-            if (topBadge) {
-                topBadge.textContent = statusText;
-                topBadge.className = isFirebaseConnected ? 'text-emerald-700 font-bold' : 'text-sky-700 font-medium';
-            }
             if (footBadge) {
                 footBadge.textContent = statusText;
                 footBadge.className = isFirebaseConnected ? 'text-emerald-600 font-bold' : 'text-slate-600 font-semibold';
@@ -1102,14 +1230,28 @@
             }
         }
 
+        const DEFAULT_FIREBASE_CONFIG = {
+            "apiKey": "AIzaSyBpEqXWixeZM0ecwr_yL13t9SGfseRtgEY",
+            "authDomain": "pickleball-tct70.firebaseapp.com",
+            "databaseURL": "https://pickleball-tct70-default-rtdb.asia-southeast1.firebasedatabase.app",
+            "projectId": "pickleball-tct70",
+            "storageBucket": "pickleball-tct70.firebasestorage.app",
+            "messagingSenderId": "1015003889551",
+            "appId": "1:1015003889551:web:609af4b91d27eb7a8a55fa",
+            "measurementId": "G-CG8E9J8S2W"
+        };
+
         function loadSavedFirebaseConfig() {
             try {
                 const raw = localStorage.getItem(FIREBASE_CFG_STORAGE_KEY);
-                if (!raw) return;
-                const parsed = JSON.parse(raw);
-                if (parsed?.config) {
-                    initFirebaseConnection(parsed.config, parsed.roomId || 'default_tournament', true);
+                if (raw) {
+                    const parsed = JSON.parse(raw);
+                    if (parsed?.config) {
+                        initFirebaseConnection(parsed.config, parsed.roomId || 'default_tournament', true);
+                        return;
+                    }
                 }
+                initFirebaseConnection(DEFAULT_FIREBASE_CONFIG, 'default_tournament', true);
             } catch (e) {}
         }
 
@@ -1273,8 +1415,6 @@
             const logoutBtn = document.getElementById('logout-role-btn');
             const adminTools = document.getElementById('admin-tools-group');
             const logoTrigger = document.getElementById('logo-upload-trigger');
-            const banner = document.getElementById('role-info-banner');
-            const bannerText = document.getElementById('role-banner-text');
             const configWrapper = document.getElementById('config-section-wrapper');
             const step1Label = document.getElementById('step-1-label');
             const playersTitle = document.getElementById('players-panel-title');
@@ -1292,8 +1432,6 @@
                 if (step1Label) step1Label.textContent = 'Cấu Hình & VĐV';
                 if (playersTitle) playersTitle.textContent = 'Khai Báo, Chỉnh Sửa VĐV & Điểm Trình';
                 if (playersSub) playersSub.textContent = 'Chỉnh sửa tên VĐV, giới tính, điểm trình (DUPR) và sắp thứ tự thi đấu ở Bước 2 cho đội trưởng.';
-                banner.className = 'bg-emerald-50 border-b border-emerald-200 text-emerald-950 text-xs py-2 px-4';
-                bannerText.innerHTML = '<strong>Chế độ BTC:</strong> Toàn quyền cấu hình, đổi màu giao diện, upload logo, đổi tên giải, sửa VĐV & nhập điểm.';
             } else if (isRef) {
                 badge.className = 'inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-0.5 rounded-lg bg-amber-400 text-slate-950';
                 badge.innerHTML = `<i data-lucide="gavel" class="w-3.5 h-3.5"></i><span>Trọng tài</span>`;
@@ -1306,8 +1444,6 @@
                 if (step1Label) step1Label.textContent = 'Danh Sách VĐV';
                 if (playersTitle) playersTitle.textContent = 'Danh Sách VĐV (Chế Độ Trọng Tài)';
                 if (playersSub) playersSub.textContent = 'Ẩn phần cấu hình giải. Trọng tài xem danh sách VĐV và tăng/giảm điểm trực tiếp ở Bước 3 / Bước 4.';
-                banner.className = 'bg-amber-50 border-b border-amber-200 text-amber-950 text-xs py-2 px-4';
-                bannerText.innerHTML = '<strong>Chế độ Trọng tài:</strong> Ẩn cấu hình, chỉ hiện danh sách VĐV và được phép tăng/giảm điểm trận đấu.';
             } else {
                 badge.className = 'inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-0.5 rounded-lg bg-sky-500 text-white';
                 badge.innerHTML = `<i data-lucide="eye" class="w-3.5 h-3.5"></i><span>Khán giả</span>`;
@@ -1320,8 +1456,6 @@
                 if (step1Label) step1Label.textContent = 'Danh Sách VĐV';
                 if (playersTitle) playersTitle.textContent = 'Danh Sách VĐV';
                 if (playersSub) playersSub.textContent = 'Chế độ Khán giả: ẩn tab/khu vực cấu hình, chỉ hiển thị danh sách VĐV và kết quả thi đấu.';
-                banner.className = 'bg-sky-50 border-b border-sky-200 text-sky-900 text-xs py-2 px-4';
-                bannerText.innerHTML = '<strong>Chế độ Khán giả:</strong> Ẩn cấu hình, chỉ hiện danh sách VĐV. Nhấn <strong>Đăng nhập</strong> để vào quyền Trọng tài hoặc BTC.';
             }
 
             const nameInput = document.getElementById('tournament-name-input');
@@ -1380,6 +1514,9 @@
 
         const DEFAULT_STATE = {
             tournamentName: 'Giải Pickleball Mở Rộng 2026',
+            tournamentTime: '',
+            tournamentLocation: '',
+            tournamentMapUrl: '',
             tournamentLogo: '',
             theme: { ...THEME_PRESETS[0] },
             mode: 'pair',
@@ -1692,20 +1829,8 @@
                 rotEl.classList.toggle('opacity-50', !isWave);
             }
 
-            const badge = document.getElementById('header-scoring-badge');
             const descEl = document.getElementById('wave-config-desc');
             const cpBadge = document.getElementById('wave-checkpoints-badge');
-
-            const sysLabels = {
-                sideout: 'Side-out',
-                rally: 'Rally Scoring',
-                rally_wave: 'Rally Cuộn Sóng'
-            };
-            if (badge) {
-                badge.textContent = isWave && state.waveTriggerMode === 'total_divisible'
-                    ? `Cuộn Sóng (Tổng % ${state.waveStep}) • Chạm ${state.targetScore}đ`
-                    : `${sysLabels[state.scoringSystem] || 'Rally'} • Chạm ${state.targetScore}đ`;
-            }
 
             if (descEl && cpBadge) {
                 if (isWave) {
