@@ -47,6 +47,126 @@
             50% { opacity: 0.45; }
         }
         .animate-live { animation: pulse-live 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+
+		 /* Khối logo nổi 3D không vòng viền ngoài, cắt sát mép loại bỏ vòng trắng */
+        .logo-3d-badge {
+            border-radius: 9999px;
+            overflow: hidden;
+            position: relative;
+            background: transparent;
+            box-shadow:
+                0 10px 18px -4px rgba(13, 92, 87, 0.42),
+                0 4px 8px -2px rgba(0, 0, 0, 0.22);
+            transition: transform 0.28s var(--ease-smooth), box-shadow 0.28s var(--ease-smooth);
+        }
+
+        .logo-3d-badge:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow:
+                0 14px 24px -4px rgba(13, 92, 87, 0.52),
+                0 6px 12px -2px rgba(0, 0, 0, 0.28);
+        }
+
+        .logo-3d-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.26);
+            filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.28));
+        }
+
+        .glass-pill {
+            background: rgba(255, 255, 255, 0.14);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.24);
+        }
+
+        .glass-tile {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            transition: transform 0.28s var(--ease-smooth), background 0.28s var(--ease-smooth);
+        }
+
+        .glass-tile:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.18);
+        }
+
+        .parallax-bg {
+            will-change: transform;
+            transition: transform 0.12s var(--ease-smooth);
+        }
+
+        .parallax-fg {
+            will-change: transform;
+            transition: transform 0.12s var(--ease-smooth);
+        }
+
+        .card-elevated {
+            background: #FFFFFF;
+            border: 1px solid #E5E7EB;
+            box-shadow: 0 4px 20px -4px rgba(15, 23, 42, 0.06);
+            transition: transform 0.32s var(--ease-smooth), box-shadow 0.32s var(--ease-smooth), border-color 0.32s var(--ease-smooth);
+        }
+
+        .card-elevated:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 30px -10px rgba(13, 148, 136, 0.18);
+            border-color: rgba(13, 148, 136, 0.38);
+        }
+
+        .rank-1-card {
+            background: linear-gradient(180deg, #FFFDF5 0%, #FFFFFF 38%);
+            border: 1.5px solid #FACC15;
+            box-shadow: 0 10px 26px -8px rgba(234, 179, 8, 0.22);
+        }
+
+        .rank-1-card:hover {
+            border-color: #EAB308;
+            box-shadow: 0 16px 34px -10px rgba(234, 179, 8, 0.3);
+        }
+
+        .rank-2-card {
+            background: linear-gradient(180deg, #F8FAFC 0%, #FFFFFF 36%);
+            border: 1.5px solid #CBD5E1;
+            box-shadow: 0 8px 22px -8px rgba(100, 116, 139, 0.16);
+        }
+
+        .rank-3-card {
+            background: linear-gradient(180deg, #FFFBF7 0%, #FFFFFF 36%);
+            border: 1.5px solid #FDBA74;
+            box-shadow: 0 8px 22px -8px rgba(234, 88, 12, 0.15);
+        }
+
+        .score-box-td {
+            background: linear-gradient(135deg, rgba(13, 148, 136, 0.12) 0%, rgba(20, 184, 166, 0.05) 100%);
+            border: 1px solid rgba(13, 148, 136, 0.28);
+        }
+
+        .tabular-nums {
+            font-variant-numeric: tabular-nums;
+        }
+
+        @keyframes viewFadeSlide {
+            from {
+                opacity: 0;
+                transform: translateY(12px) scale(0.992);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .animate-view {
+            animation: viewFadeSlide 0.38s var(--ease-smooth) forwards;
+        }
+
+        .modal-backdrop {
+            background-color: rgba(15, 23, 42, 0.55);
+            backdrop-filter: blur(6px);
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
